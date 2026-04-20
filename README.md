@@ -82,7 +82,7 @@ O frontend estará disponível em `http://localhost:4200`.
 
 ## 6. Requisitos
 
--   Java 17+
+-   Java 21
 -   Gradle Wrapper (já incluído no projeto, não requer instalação)
 -   GCC (ou equivalente) para compilar a lógica em C
 -   Node.js 18+ e npm
