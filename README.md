@@ -86,4 +86,4 @@ O frontend estará disponível em `http://localhost:4200`.
 -   Gradle Wrapper (já incluído no projeto, não requer instalação)
 -   GCC (ou equivalente) para compilar a lógica em C
 -   Node.js 18+ e npm
--   Angular CLI 17+
+-   Angular CLI 21+

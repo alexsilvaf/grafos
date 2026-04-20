@@ -1,8 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { Network } from 'vis-network/standalone';
-import { DataSet } from 'vis-data/standalone';
+import { DataSet, Network, Node, Edge } from 'vis-network/standalone';
 
 import { GrafoService } from '../../services/grafo.service';
 import { Grafo } from '../../models/grafo.model';
@@ -54,10 +53,10 @@ export class GrafoComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    const nodes = new DataSet(
+    const nodes = new DataSet<Node>(
       this.grafo.nos.map(n => ({ id: n.id, label: n.id }))
     );
-    const edges = new DataSet(
+    const edges = new DataSet<Edge>(
       this.grafo.arestas.map(a => ({
         from: a.origem,
         to: a.destino,
