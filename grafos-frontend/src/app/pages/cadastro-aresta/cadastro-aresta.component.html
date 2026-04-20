@@ -1,0 +1,53 @@
+<section class="cadastro">
+  <h2>Cadastro de Aresta</h2>
+
+  <div *ngIf="carregandoNos" class="mensagem">Carregando nós...</div>
+
+  <div *ngIf="nosInsuficientes" class="mensagem erro">
+    É necessário ter pelo menos dois nós cadastrados.
+    <button type="button" class="btn-primary" (click)="irParaCadastroDeNos()">
+      Cadastrar Nó
+    </button>
+  </div>
+
+  <form *ngIf="!carregandoNos && !nosInsuficientes" (ngSubmit)="salvar()">
+    <div class="form-group">
+      <label for="origem">Nó de origem</label>
+      <select id="origem" name="origem" [(ngModel)]="origem" [disabled]="enviando">
+        <option value="">Selecione...</option>
+        <option *ngFor="let n of nos" [value]="n.id">{{ n.id }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="destino">Nó de destino</label>
+      <select id="destino" name="destino" [(ngModel)]="destino" [disabled]="enviando">
+        <option value="">Selecione...</option>
+        <option *ngFor="let n of nos" [value]="n.id">{{ n.id }}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="custo">Custo</label>
+      <input
+        id="custo"
+        name="custo"
+        type="number"
+        step="any"
+        [(ngModel)]="custo"
+        [disabled]="enviando">
+    </div>
+
+    <div class="acoes">
+      <button type="submit" class="btn-primary" [disabled]="enviando">
+        {{ enviando ? 'Salvando...' : 'Cadastrar' }}
+      </button>
+      <button type="button" class="btn-secondary" (click)="voltar()">
+        Voltar
+      </button>
+    </div>
+  </form>
+
+  <div *ngIf="mensagem" class="mensagem sucesso">{{ mensagem }}</div>
+  <div *ngIf="erro && !nosInsuficientes" class="mensagem erro">{{ erro }}</div>
+</section>

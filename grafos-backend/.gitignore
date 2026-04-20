@@ -1,0 +1,18 @@
+# Maven
+target/
+*.jar
+*.war
+
+# Lógica em C (binários gerados)
+logica-c/*.o
+logica-c/*.so
+logica-c/*.dll
+logica-c/*.dylib
+
+# IDE
+.idea/
+.vscode/
+*.iml
+.project
+.classpath
+.settings/
