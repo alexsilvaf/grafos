@@ -63,8 +63,10 @@ O funcionamento do sistema ocorre da seguinte forma:
     cd grafos-backend
     # Compila a lógica em C (gera libgrafo.so / grafo.dll)
     make -C logica-c
-    # Executa a API
-    mvn spring-boot:run
+    # Executa a API (Linux/Mac)
+    ./gradlew bootRun
+    # Executa a API (Windows)
+    gradlew.bat bootRun
 
 A API estará disponível em `http://localhost:8080`.
 
@@ -81,7 +83,7 @@ O frontend estará disponível em `http://localhost:4200`.
 ## 6. Requisitos
 
 -   Java 17+
--   Maven 3.8+
+-   Gradle Wrapper (já incluído no projeto, não requer instalação)
 -   GCC (ou equivalente) para compilar a lógica em C
 -   Node.js 18+ e npm
 -   Angular CLI 17+

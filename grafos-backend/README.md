@@ -7,7 +7,9 @@ dinamicamente via JNA.
 ## Estrutura
 
     grafos-backend/
-    ├── pom.xml
+    ├── build.gradle
+    ├── settings.gradle
+    ├── gradlew / gradlew.bat
     ├── logica-c/                          # Lógica do grafo em C
     │   ├── grafo.h
     │   ├── grafo.c
@@ -33,6 +35,13 @@ dinamicamente via JNA.
 Compile a lógica em C antes de subir a API:
 
     make -C logica-c
-    mvn spring-boot:run
+
+Em seguida, execute a aplicação usando o Gradle Wrapper:
+
+    # Linux/Mac
+    ./gradlew bootRun
+
+    # Windows
+    gradlew.bat bootRun
 
 A API sobe em `http://localhost:8080`.

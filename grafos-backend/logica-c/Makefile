@@ -1,17 +1,18 @@
 CC = gcc
 CFLAGS = -Wall -fPIC -O2
 
-UNAME_S := $(shell uname -s 2>/dev/null)
-
 ifeq ($(OS),Windows_NT)
     TARGET = grafo.dll
     LDFLAGS = -shared
-else ifeq ($(UNAME_S),Darwin)
-    TARGET = libgrafo.dylib
-    LDFLAGS = -dynamiclib
 else
-    TARGET = libgrafo.so
-    LDFLAGS = -shared
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Darwin)
+        TARGET = libgrafo.dylib
+        LDFLAGS = -dynamiclib
+    else
+        TARGET = libgrafo.so
+        LDFLAGS = -shared
+    endif
 endif
 
 all: $(TARGET)
