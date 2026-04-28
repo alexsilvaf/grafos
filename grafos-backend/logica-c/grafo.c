@@ -26,17 +26,17 @@ static int total_arestas = 0;
 
 static char buffer_json[TAM_JSON];
 
-static int existe_no() {
+static int existe_no() { // William
 }
 
-static int existe_aresta() {
+static int existe_aresta() { // Manuela
 }
 
-int adicionar_no() {
+int adicionar_no() { // Yasmin
 }
 
-int adicionar_aresta() {
+int adicionar_aresta() { // Guilherme
 }
 
-const char *obter_grafo_json() {
+const char *obter_grafo_json() { // Alex
 }
