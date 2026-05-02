@@ -35,7 +35,18 @@ static int existe_aresta() { // Manuela
 int adicionar_no() { // Yasmin
 }
 
-int adicionar_aresta() { // Guilherme
+int adicionar_aresta() { // Guilherme 
+int origem, destino;
+
+printf("Digite o Vertice de origem ");
+scanf("%d", &origem);
+
+printf("Digite o vertice de destino: ")
+scanf("%d" &destino);
+
+printf("Aresta adicionada entre %d e %d/n" , origem, destino);
+
+return 1;
 }
 
 const char *obter_grafo_json() { // Alex
