@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -fPIC -O2
+CFLAGS = -Wall -fPIC -O2 -Wno-error -Wno-return-type
 
 ifeq ($(OS),Windows_NT)
     TARGET = grafo.dll

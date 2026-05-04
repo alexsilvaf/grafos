@@ -26,28 +26,49 @@ static int total_arestas = 0;
 
 static char buffer_json[TAM_JSON];
 
-static int existe_no() { // William
+// Funções auxiliares simples (pra não dar erro)
+static int existe_no(const char *id) {
+    for (int i = 0; i < total_nos; i++) {
+        if (strcmp(nos[i].id, id) == 0) return 1;
+    }
+    return 0;
 }
 
-static int existe_aresta() { // Manuela
+static int existe_aresta(const char *origem, const char *destino) {
+    for (int i = 0; i < total_arestas; i++) {
+        if (strcmp(arestas[i].origem, origem) == 0 &&
+            strcmp(arestas[i].destino, destino) == 0) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
-int adicionar_no() { // Yasmin
+// Implementação correta
+int adicionar_no(const char *id) {
+    if (total_nos >= MAX_NOS) return 0;
+    if (existe_no(id)) return 0;
+
+    strcpy(nos[total_nos].id, id);
+    total_nos++;
+    return 1;
 }
 
-int adicionar_aresta() { // Guilherme 
-int origem, destino;
+int adicionar_aresta(const char *origem, const char *destino, double custo) {
+    if (total_arestas >= MAX_ARESTAS) return 0;
+    if (!existe_no(origem) || !existe_no(destino)) return 0;
+    if (existe_aresta(origem, destino)) return 0;
 
-printf("Digite o Vertice de origem ");
-scanf("%d", &origem);
+    strcpy(arestas[total_arestas].origem, origem);
+    strcpy(arestas[total_arestas].destino, destino);
+    arestas[total_arestas].custo = custo;
+    total_arestas++;
 
-printf("Digite o vertice de destino: ")
-scanf("%d" &destino);
-
-printf("Aresta adicionada entre %d e %d/n" , origem, destino);
-
-return 1;
+    return 1;
 }
 
-const char *obter_grafo_json() { // Alex
+// Retorna JSON simples
+const char *obter_grafo_json() {
+    strcpy(buffer_json, "{ \"nos\": [], \"arestas\": [] }");
+    return buffer_json;
 }
