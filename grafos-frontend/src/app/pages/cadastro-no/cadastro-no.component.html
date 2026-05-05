@@ -1,0 +1,123 @@
+<div class="page">
+  <header class="page-header">
+    <div class="page-header-inner narrow">
+      <div class="page-header-left">
+        <button type="button" class="icon-back-btn" (click)="cancel()" aria-label="Voltar">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+        </button>
+        <div>
+          <h1 class="page-header-title">Cadastrar Nó</h1>
+          <p class="page-header-subtitle">Adicione um novo nó ao grafo</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main narrow">
+    @if (successMessage && formState === 'success') {
+      <div class="alert alert-success">
+        <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <div class="alert-body">
+          <div class="alert-title">Sucesso</div>
+          {{ successMessage }}
+        </div>
+        <button type="button" class="alert-close" (click)="dismissSuccess()" aria-label="Fechar">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    }
+
+    @if (errorType === 'api') {
+      <div class="alert alert-error">
+        <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="alert-body">
+          <div class="alert-title">Erro de Comunicação</div>
+          Não foi possível conectar à API. Verifique sua conexão e tente novamente.
+        </div>
+      </div>
+    }
+
+    @if (errorType === 'internal') {
+      <div class="alert alert-error">
+        <svg class="alert-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div class="alert-body">
+          <div class="alert-title">Erro Interno</div>
+          Ocorreu um erro na camada de processamento. Tente novamente mais tarde.
+        </div>
+      </div>
+    }
+
+    <div class="card">
+      <div class="card-header card-section">
+        <h2>Informações do Nó</h2>
+        <p class="page-header-subtitle">Preencha o identificador único para o novo nó</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit(false)" #form="ngForm" novalidate>
+        <div class="card-content card-section">
+          <div class="form-field">
+            <label for="identifier">
+              Identificador do Nó <span class="required">*</span>
+            </label>
+            <input
+              id="identifier"
+              name="identifier"
+              type="text"
+              class="form-control"
+              [class.invalid]="errorType === 'required' || errorType === 'exists'"
+              placeholder="Ex: A, B, Node1, etc."
+              [(ngModel)]="identifier"
+              (ngModelChange)="onIdentifierChange()"
+              [disabled]="isSubmitting"
+              required
+              autofocus
+            />
+            @if (errorType === 'required') {
+              <span class="field-error">O identificador é obrigatório</span>
+            } @else if (errorType === 'exists') {
+              <span class="field-error">Este identificador já existe</span>
+            } @else {
+              <span class="helper">Use um nome único e descritivo</span>
+            }
+          </div>
+        </div>
+
+        <div class="card-footer bordered justify-end">
+          <button type="button" class="btn btn-ghost" (click)="cancel()" [disabled]="isSubmitting">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onSubmit(true)"
+            [disabled]="isSubmitting || !hasIdentifier"
+          >
+            {{ isSubmitting ? 'Salvando...' : 'Salvar e Cadastrar Outro' }}
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isSubmitting || !hasIdentifier"
+          >
+            @if (isSubmitting) {
+              <div class="spinner size-sm"></div>
+              Salvando...
+            } @else {
+              Salvar
+            }
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
