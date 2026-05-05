@@ -46,29 +46,51 @@ static int existe_aresta(const char *origem, const char *destino) {
 
 // Implementação correta
 int adicionar_no(const char *id) {
-    if (total_nos >= MAX_NOS) return 0;
-    if (existe_no(id)) return 0;
+    if (id == NULL || strlen(id) == 0) return GRAFO_ERRO;
+    if (total_nos >= MAX_NOS) return GRAFO_ERRO;
+    if (existe_no(id)) return GRAFO_DUPLICIDADE;
 
-    strcpy(nos[total_nos].id, id);
+    strncpy(nos[total_nos].id, id, TAM_ID - 1);
+    nos[total_nos].id[TAM_ID - 1] = '\0';
     total_nos++;
-    return 1;
+    return GRAFO_SUCESSO;
 }
 
 int adicionar_aresta(const char *origem, const char *destino, double custo) {
-    if (total_arestas >= MAX_ARESTAS) return 0;
-    if (!existe_no(origem) || !existe_no(destino)) return 0;
-    if (existe_aresta(origem, destino)) return 0;
+    if(origem == NULL || destino == NULL) return GRAFO_ERRO;
+    if (total_arestas >= MAX_ARESTAS) return GRAFO_ERRO;
+    if (!existe_no(origem) || !existe_no(destino)) return GRAFO_ERRO;
+    if (existe_aresta(origem, destino)) return GRAFO_DUPLICIDADE;
 
-    strcpy(arestas[total_arestas].origem, origem);
-    strcpy(arestas[total_arestas].destino, destino);
+    strncpy(arestas[total_arestas].origem, origem, TAM_ID - 1);
+    arestas[total_arestas].origem[TAM_ID - 1] = '\0';
+
+    strncpy(arestas[total_arestas].destino, destino, TAM_ID - 1);
+    arestas[total_arestas].destino[TAM_ID - 1] = '\0';
+
     arestas[total_arestas].custo = custo;
     total_arestas++;
 
-    return 1;
+    return GRAFO_SUCESSO;
 }
 
-// Retorna JSON simples
+// Retorna JSON do grafo completo
 const char *obter_grafo_json() {
-    strcpy(buffer_json, "{ \"nos\": [], \"arestas\": [] }");
+    int escrito = 0;
+    escrito += snprintf(buffer_json + escrito, TAM_JSON - escrito, "{\"nos\":[");
+    for (int i = 0; i < total_nos; i++) {
+        escrito += snprintf(buffer_json + escrito, TAM_JSON - escrito,
+                            "%s{\"id\":\"%s\"}", i > 0 ? "," : "", nos[i].id);
+    }
+    escrito += snprintf(buffer_json + escrito, TAM_JSON - escrito, "],\"arestas\":[");
+    for (int i = 0; i < total_arestas; i++) {
+        escrito += snprintf(buffer_json + escrito, TAM_JSON - escrito,
+                            "%s{\"origem\":\"%s\",\"destino\":\"%s\",\"custo\":%.2f}",
+                            i > 0 ? "," : "",
+                            arestas[i].origem,
+                            arestas[i].destino,
+                            arestas[i].custo);
+    }
+    snprintf(buffer_json + escrito, TAM_JSON - escrito, "]}");
     return buffer_json;
 }

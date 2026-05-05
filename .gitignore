@@ -6,6 +6,9 @@
 .vscode/
 *.iml
 
+# Local reference screens
+telas-referencia/
+
 # OS
 .DS_Store
 Thumbs.db
