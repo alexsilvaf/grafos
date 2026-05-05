@@ -28,6 +28,14 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
+task compilarLibC(type: Exec) {
+    workingDir "${projectDir}/logica-c"
+    commandLine 'make', 'all'
+    inputs.files fileTree("${projectDir}/logica-c").include('*.c', '*.h', 'Makefile')
+    outputs.file "${projectDir}/logica-c/libgrafo.so"
+}
+
 bootRun {
+    dependsOn compilarLibC
     systemProperty 'jna.library.path', "${projectDir}/logica-c"
 }

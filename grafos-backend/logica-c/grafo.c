@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>
 
 #define MAX_NOS 128
 #define MAX_ARESTAS 512
@@ -74,8 +75,15 @@ int adicionar_aresta(const char *origem, const char *destino, double custo) {
     return GRAFO_SUCESSO;
 }
 
+void liberar_string(const char *ptr) {
+    (void)ptr;
+}
+
 // Retorna JSON do grafo completo
 const char *obter_grafo_json() {
+    char *locale_anterior = setlocale(LC_NUMERIC, NULL);
+    setlocale(LC_NUMERIC, "C");
+
     int escrito = 0;
     escrito += snprintf(buffer_json + escrito, TAM_JSON - escrito, "{\"nos\":[");
     for (int i = 0; i < total_nos; i++) {
@@ -92,5 +100,6 @@ const char *obter_grafo_json() {
                             arestas[i].custo);
     }
     snprintf(buffer_json + escrito, TAM_JSON - escrito, "]}");
+    setlocale(LC_NUMERIC, locale_anterior);
     return buffer_json;
 }

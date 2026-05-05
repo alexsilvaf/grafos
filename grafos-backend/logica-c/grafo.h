@@ -11,4 +11,6 @@ int adicionar_aresta(const char *origem, const char *destino, double custo);
 
 const char *obter_grafo_json(void);
 
+void liberar_string(const char *ptr);
+
 #endif
